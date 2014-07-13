@@ -1,0 +1,13 @@
+# Solution User Option file : Including user's custom environments of IDE
+*.suo
+
+# Project User Option file : Including user's project options etc....
+*.csproj.user
+
+*.exe
+
+GeroRPG/bin/
+GeroRPG/obj/
+
+*.pdb
+
