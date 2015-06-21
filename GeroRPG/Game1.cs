@@ -12,10 +12,14 @@ namespace GeroRPG
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
 
+		protected Model ModelData { get; private set; }
+		protected Matrix viewMatrix;
+
 		public Game1()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
+			viewMatrix = Matrix.CreateLookAt(new Vector3(3.0f, 3.0f, 3.0f), Vector3.Zero, Vector3.Up);
 		}
 
 		/// <summary>
@@ -27,6 +31,8 @@ namespace GeroRPG
 		protected override void Initialize()
 		{
 			// TODO: Add your initialization logic here
+
+			ModelData = Content.Load<Model>("Test/Axis");
 
 			base.Initialize();
 		}
@@ -76,6 +82,19 @@ namespace GeroRPG
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
 			// TODO: Add your drawing code here
+
+			foreach (ModelMesh mesh in ModelData.Meshes)
+			{
+				foreach (BasicEffect effect in mesh.Effects)
+				{
+					effect.View = viewMatrix;
+					effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
+					GraphicsDevice.Viewport.AspectRatio,
+					1, 10000);
+					effect.EnableDefaultLighting();
+				}
+				mesh.Draw();
+			}
 
 			base.Draw(gameTime);
 		}
